@@ -1,7 +1,9 @@
 import fetch from "cross-fetch";
+import types from "./apiTypes";
 
+//同じようなコードが続くようであれば types をループで回しても良い。
 const api = {
-  test: data => {
+  [types.TEST]: data => {
     return fetch("https://api.github.com/users/coa00/repos", {
       method: "GET",
       body: data
@@ -16,7 +18,7 @@ const api = {
         throw err;
       });
   },
-  fail: data => {
+  [types.FAIL]: data => {
     return fetch("https://fail", {
       method: "GET",
       body: data

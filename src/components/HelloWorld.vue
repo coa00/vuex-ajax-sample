@@ -1,8 +1,7 @@
 <template>
   <div class="hello">
-
     <button v-on:click="test">test</button>
-    <p v-show="isLoading">読み込み中</p>
+    <p v-show="getIsLoading">読み込み中</p>
     <ul id="example-1">
       <li v-for="(value, key) in getItem">
         <div v-bind:id="key">
@@ -12,35 +11,34 @@
       </li>
     </ul>
     <button v-on:click="fail">FAIL</button>
-    <p v-show="isLoading">読み込み中</p>
+    <p v-show="getIsLoading">読み込み中</p>
     <p v-show="getError">{{ getError }}</p>
   </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
+import types from "../lib/apiTypes";
 // import log from "loglevel";
-const TEST = "test";
-const FAIL = "fail";
 
 export default {
   name: "HelloWorld",
+  //action と method をマッピング
   methods: {
-    ...mapActions([TEST, FAIL])
+    ...mapActions([types.TEST, types.FAIL])
   },
+  //state を呼び出し。変更があったら反映
+  //get${Type} で名称は統一
   computed: {
     getError() {
       return this.$store.state.error;
     },
-    isLoading() {
+    getIsLoading() {
       return this.$store.state.isLoading;
     },
     getItem() {
-      return this.$store.state[TEST];
+      return this.$store.state[types.TEST];
     }
-  },
-  props: {
-    msg: String
   }
 };
 </script>
